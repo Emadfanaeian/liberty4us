@@ -17,9 +17,8 @@ jobs:
 
     steps:
       # need checkout before using compose-action
-      - uses: actions/checkout@v3
-      - uses: isbang/compose-action@v1.4.1
-        with:
-          up-flags: "run app -c 'python manage.py test && flake8'"
-          compose-file: "./docker-compose.yml"
-          down-flags: "--volumes"
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Run docker-compsoe
+        run: docker-compose run app sh -c "python manage.py test && flake8" 
