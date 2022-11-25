@@ -1,7 +1,6 @@
 """Article Model"""
 
 from django.db import models
-from django.contrib.auth.models import User
 
 
 class Article(models.Model):
@@ -10,5 +9,5 @@ class Article(models.Model):
     short_information = models.TextField()
     is_published = models.BooleanField(default=False)
     total_approved = models.IntegerField(default=0)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    # author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
