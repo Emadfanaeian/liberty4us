@@ -1,7 +1,10 @@
 """Override Default User Behavior"""
+
+from django.conf import settings
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
 from django.db import models
+from django.utils.timesince import datetime
 
 
 class UserManager(BaseUserManager):
@@ -37,3 +40,47 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+
+class Tag(models.Model):
+    """Tags To Be Used For user"""
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
+    def __str__(self) -> str:
+        return f"{self.name}"
+
+
+class Countries(models.Model):
+    """List Of Countries Model"""
+    name = models.CharField(max_length=255)
+
+
+class Dates(models.Model):
+    """List Of Dates And Events"""
+    title = models.CharField(max_length=255, null=True)
+    date = models.DateField(null=True)
+
+
+class CountryStates(models.Model):
+    """Country States"""
+    name = models.CharField(max_length=255)
+    country = models.ForeignKey(
+        Countries, on_delete=models.SET_NULL, null=True)
+    from_date = models.ForeignKey(
+        Dates, on_delete=models.SET_NULL, null=True, related_name='form_date')
+    to_date = models.ForeignKey(
+        Dates, on_delete=models.SET_NULL, null=True, related_name='to_date')
+    previous_name = models.ForeignKey(
+        'self', on_delete=models.SET_NULL, null=True, related_name='country_states')
+
+
+class StatesCities(models.Model):
+    """States Cities"""
+    name = models.CharField(max_length=255)
+    state = models.ForeignKey(
+        CountryStates, on_delete=models.SET_NULL, null=True)

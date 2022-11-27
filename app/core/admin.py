@@ -32,7 +32,7 @@ class UserAdmin(BaseUserAdmin):
             _('Important dates'),
             {
                 'fields': ('last_login',)
-             }
+            }
         ),
     )
     add_fieldsets = (
@@ -46,3 +46,8 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(models.User, UserAdmin)
+admin.site.register(models.Tag)
+admin.site.register(models.Dates)
+admin.site.register(models.Countries)
+admin.site.register(models.CountryStates)
+admin.site.register(models.StatesCities)
