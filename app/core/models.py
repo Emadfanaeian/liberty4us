@@ -59,11 +59,20 @@ class Countries(models.Model):
     """List Of Countries Model"""
     name = models.CharField(max_length=255)
 
+    def __str__(self) -> str:
+        return f"{self.name}"
 
 class Dates(models.Model):
     """List Of Dates And Events"""
     title = models.CharField(max_length=255, null=True)
     date = models.DateField(null=True)
+
+    def __str__(self) -> str:
+        if not self.title:
+            return f"{self.name}"
+        else
+            return f"{self.date}"
+            
 
 
 class CountryStates(models.Model):
@@ -78,9 +87,14 @@ class CountryStates(models.Model):
     previous_name = models.ForeignKey(
         'self', on_delete=models.SET_NULL, null=True, related_name='country_states')
 
+    def __str__(self) -> str:
+        return f"{self.name} {self.from_date}-{self.to_date}"
 
 class StatesCities(models.Model):
     """States Cities"""
     name = models.CharField(max_length=255)
     state = models.ForeignKey(
         CountryStates, on_delete=models.SET_NULL, null=True)
+    
+    def __str__(self) -> str:
+        return f"{self.name}"
